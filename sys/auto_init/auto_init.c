@@ -286,6 +286,11 @@ void auto_init(void)
     auto_init_cc2538_rf();
 #endif
 
+#ifdef MODULE_CC26XX_CC13XX_RF
+    extern void auto_init_cc26xx_cc13xx_rf(void);
+    auto_init_cc26xx_cc13xx_rf();
+#endif
+
 #ifdef MODULE_XBEE
     extern void auto_init_xbee(void);
     auto_init_xbee();

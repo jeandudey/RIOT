@@ -3,3 +3,4 @@ CFLAGS += -DCPU_VARIANT_$(VARIANT)
 
 USEMODULE += periph_common cc26xx_cc13xx_periph
 INCLUDES += -I${RIOTCPU}/cc26xx_cc13xx/include
+INCLUDES += -I${RIOTCPU}/cc26xx_cc13xx/coresdk/vendor/coresdk_cc13xx_cc26xx/source
