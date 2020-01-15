@@ -8,11 +8,11 @@
  */
 
 /**
- * @ingroup         boards_cc1352_launchpad
+ * @ingroup         boards_cc1312_launchpad
  * @{
  *
  * @file
- * @brief           Board specific implementations for TI CC1352 LaunchPad
+ * @brief           Board specific implementations for TI CC1312 LaunchPad
  *
  * @author          Nicholas Jackson <nicholas.jackson@griffithuni.edu.au>
  * @author          Sebastian Meiling <s@mlng.net>

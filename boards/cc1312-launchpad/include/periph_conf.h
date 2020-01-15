@@ -8,11 +8,11 @@
  */
 
 /**
- * @ingroup         boards_cc2650_launchpad
+ * @ingroup         boards_cc1312_launchpad
  * @{
  *
  * @file
- * @brief           Peripheral MCU configuration for TI CC2650 LaunchPad
+ * @brief           Peripheral MCU configuration for TI CC1312 LaunchPad
  *
  * @author          Nicholas Jackson <nicholas.jackson@griffithuni.edu.au>
  * @author          Sebastian Meiling <s@mlng.net>
@@ -68,7 +68,7 @@ static const timer_conf_t timer_config[] = {
 /**
 * @name    UART configuration
 *
-* The used CC26x0 CPU only supports a single UART device, so all we need to
+* The used CC1312 CPU only supports a single UART device, so all we need to
 * configure are the RX and TX pins.
 *
 * Optionally we can enable hardware flow control, by setting UART_HW_FLOW_CTRL
@@ -88,10 +88,10 @@ static const timer_conf_t timer_config[] = {
 static const uart_conf_t uart_config[] = {
  {
      .regs = UART0,
-     .tx_pin = 13,
-     .rx_pin = 12,
-     .rts_pin = 0,      /* ignored when flow_control is 0 */
-     .cts_pin = 0,      /* ignored when flow_control is 0 */
+     .tx_pin = 3,
+     .rx_pin = 2,
+     .rts_pin = 18,      /* ignored when flow_control is 0 */
+     .cts_pin = 19,      /* ignored when flow_control is 0 */
      .flow_control = 0,
      .intn = UART0_IRQN
  }
