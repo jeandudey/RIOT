@@ -36,7 +36,9 @@ void _irq_handler(void)
 
 static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
 {
-    if (netdev == NULL) {
+    cc26xx_cc13xx_rf_t *dev = (cc26xx_cc13xx_rf_t *) netdev;
+
+    if (dev == NULL) {
         return -ENODEV;
     }
 
@@ -46,7 +48,7 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
                 return -EOVERFLOW;
             }
             else {
-            /*    *(uint16_t*)value = xxxx; */
+                *(uint16_t*)value = cc26xx_cc13xx_get_addr_short();
             }
             return sizeof(uint16_t);
 
@@ -110,29 +112,43 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
             break;
     }
 
-    /*int res;*/
+    int res;
 
-    /*if (((res = netdev_ieee802154_get((netdev_ieee802154_t *)netdev, opt, value,
+    if (((res = netdev_ieee802154_get((netdev_ieee802154_t *)netdev, opt, value,
                                       max_len)) >= 0) || (res != -ENOTSUP)) {
         return res;
-    }*/
+    }
 
     return -ENOTSUP;
 }
 
-/*static int _set(netdev_t *netdev, netopt_t opt, const void *value, size_t value_len)
+static int _set(netdev_t *netdev, netopt_t opt, const void *value, size_t value_len)
 {
-    return res;
+    (void)netdev;
+    (void)opt;
+    (void)value;
+    (void)value_len;
+
+    return 0;
 }
 
 static int _send(netdev_t *netdev, const iolist_t *iolist)
 {
+    (void)netdev;
+    (void)iolist;
+
+    return 0;
 }
 
 static int _recv(netdev_t *netdev, void *buf, size_t len, void *info)
 {
+    (void)netdev;
+    (void)buf;
+    (void)len;
+    (void)info;
+
     return 0;
-}*/
+}
 
 static void _isr(netdev_t *netdev)
 {
@@ -141,16 +157,24 @@ static void _isr(netdev_t *netdev)
 
 static int _init(netdev_t *netdev)
 {
+    cc26xx_cc13xx_rf_t *dev = (cc26xx_cc13xx_rf_t *) netdev;
     _dev = netdev;
+
+    uint64_t addr_long = cc26xx_cc13xx_get_addr_long();
+
+    netdev_ieee802154_reset(&dev->netdev);
+
+    netdev_ieee802154_set(&dev->netdev, NETOPT_ADDRESS_LONG,
+                          &addr_long, sizeof(addr_long));
 
     return 0;
 }
 
 const netdev_driver_t cc26xx_cc13xx_rf_driver = {
     .get  = _get,
-    .set  = NULL,
-    .send = NULL,
-    .recv = NULL,
+    .set  = _set,
+    .send = _send,
+    .recv = _recv,
     .isr  = _isr,
     .init = _init,
 };

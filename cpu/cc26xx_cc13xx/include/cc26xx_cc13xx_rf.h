@@ -33,12 +33,21 @@ extern "C" {
  * @brief   CC26XX/CC13XX Radio device interface.
  */
 typedef struct {
+    netdev_ieee802154_t netdev;   /**< netdev parent struct */
+    uint8_t state;                /**< current state of the radio */
 } cc26xx_cc13xx_rf_t;
 
 /**
  * @brief   Setup the CC26XX/CC13XX radio.
  */
 void cc26xx_cc13xx_setup(cc26xx_cc13xx_rf_t *dev);
+
+/**
+ * @brief   Get the configured short address of the device
+ *
+ * @return  The currently set (2-byte) short address
+ */
+uint16_t cc26xx_cc13xx_get_addr_short(void);
 
 /**
  * @brief   Get the configured long address of the device

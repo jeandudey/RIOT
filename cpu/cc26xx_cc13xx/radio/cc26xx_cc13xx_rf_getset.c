@@ -29,6 +29,13 @@
 #define IEEE_MAC_SECONDARY_ADDRESS  (CCFG_BASE + CCFG_O_IEEE_MAC_0)
 #define IEEE_LONG_ADDR_SIZE         8
 
+uint16_t cc26xx_cc13xx_get_addr_short(void)
+{
+    /* TODO: performance? do we really need to get ALL of the address to just
+     * get the short address? */
+    return (uint16_t)((cc26xx_cc13xx_get_addr_short() & 0xFFFF0000) >> 16);
+}
+
 uint64_t cc26xx_cc13xx_get_addr_long(void)
 {
     int i = 0;
