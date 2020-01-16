@@ -19,12 +19,17 @@
 #include "cc26xx_cc13xx_rf.h"
 #include "cc26xx_cc13xx_rf_netdev.h"
 
+#define ENABLE_DEBUG (1)
+#include "debug.h"
+
 void cc26xx_cc13xx_init(void)
 {
+    DEBUG("cc26xx_cc13xx_init\n");
 }
 
 void cc26xx_cc13xx_setup(cc26xx_cc13xx_rf_t *dev)
 {
+    DEBUG("cc26xx_cc13xx_setup\n");
     netdev_t *netdev = (netdev_t *)dev;
 
     netdev->driver = &cc26xx_cc13xx_rf_driver;

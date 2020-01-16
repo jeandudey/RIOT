@@ -20,10 +20,24 @@
 
 #include "cc26xx_cc13xx_rf.h"
 
+#include <ti/drivers/rf/RF.h>
 #include <ti/devices/DeviceFamily.h>
 #include DeviceFamily_constructPath(inc/hw_memmap.h)
 #include DeviceFamily_constructPath(inc/hw_fcfg1.h)
 #include DeviceFamily_constructPath(inc/hw_ccfg.h)
+
+#undef UART0_BASE
+#undef UART1_BASE
+#undef GPT0_BASE
+#undef GPT1_BASE
+#undef GPT2_BASE
+#undef GPT3_BASE
+#undef FLASH_BASE
+#undef GPIO_BASE
+#undef AON_IOC_BASE
+
+#define ENABLE_DEBUG (1)
+#include "debug.h"
 
 #define IEEE_MAC_PRIMARY_ADDRESS    (FCFG1_BASE + FCFG1_O_MAC_15_4_0)
 #define IEEE_MAC_SECONDARY_ADDRESS  (CCFG_BASE + CCFG_O_IEEE_MAC_0)
@@ -31,13 +45,20 @@
 
 uint16_t cc26xx_cc13xx_get_addr_short(void)
 {
+    DEBUG_PUTS("get_addr_short");
+
     /* TODO: performance? do we really need to get ALL of the address to just
      * get the short address? */
-    return (uint16_t)((cc26xx_cc13xx_get_addr_short() & 0xFFFF0000) >> 16);
+    uint16_t res = (uint16_t)((cc26xx_cc13xx_get_addr_long() & 0xFFFF000000000000) >> 48);
+    DEBUG("%04x\n", res);
+
+    return res;
 }
 
 uint64_t cc26xx_cc13xx_get_addr_long(void)
 {
+    DEBUG_PUTS("get_addr_long");
+
     int i = 0;
     uint8_t dst[IEEE_LONG_ADDR_SIZE] = {0};
     uint64_t res = 0;
@@ -80,5 +101,21 @@ uint64_t cc26xx_cc13xx_get_addr_long(void)
           ((uint64_t)dst[1] << 48) |
           ((uint64_t)dst[0] << 56);
 
+    DEBUG("%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n",
+          dst[0]tx_power_table,
+          dst[1],
+          dst[2],
+          dst[3],
+          dst[4],
+          dst[5],
+          dst[6],
+          dst[7]);
+
     return res;
+}
+
+uint16_t cc26xx_cc13xx_get_tx_power(void)
+{
+    RF_TxPowerTable_findValue(tx_power_table);
+    return 0;
 }

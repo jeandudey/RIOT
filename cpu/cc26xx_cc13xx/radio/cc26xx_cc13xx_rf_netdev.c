@@ -24,6 +24,11 @@
 #include "cc26xx_cc13xx_rf.h"
 #include "cc26xx_cc13xx_rf_netdev.h"
 
+#include <ti/drivers/rf/RF.h>
+
+#define ENABLE_DEBUG (1)
+#include "debug.h"
+
 /* Reference pointer for the IRQ handler */
 static netdev_t *_dev;
 
@@ -36,6 +41,7 @@ void _irq_handler(void)
 
 static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
 {
+    DEBUG_PUTS("_get");
     cc26xx_cc13xx_rf_t *dev = (cc26xx_cc13xx_rf_t *) netdev;
 
     if (dev == NULL) {
@@ -44,6 +50,7 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
 
     switch (opt) {
         case NETOPT_ADDRESS:
+            DEBUG_PUTS("NETOPT_ADDRESS");
             if (max_len < sizeof(uint16_t)) {
                 return -EOVERFLOW;
             }
@@ -53,6 +60,7 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
             return sizeof(uint16_t);
 
         case NETOPT_ADDRESS_LONG:
+            DEBUG_PUTS("NETOPT_ADDRESS_LONG");
             if (max_len < sizeof(uint64_t)) {
                 return -EOVERFLOW;
             }
@@ -62,9 +70,11 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
             return sizeof(uint64_t);
 
         case NETOPT_AUTOACK:
+            DEBUG_PUTS("NETOPT_AUTOACK");
             return -ENOTSUP;
 
         case NETOPT_CHANNEL:
+            DEBUG_PUTS("NETOPT_CHANNEL");
             if (max_len < sizeof(uint16_t)) {
                 return -EOVERFLOW;
             }
@@ -72,6 +82,7 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
             return sizeof(uint16_t);
 
         case NETOPT_CHANNEL_PAGE:
+            DEBUG_PUTS("NETOPT_CHANNEL_PAGE");
             if (max_len < sizeof(uint16_t)) {
                 return -EOVERFLOW;
             }
@@ -79,6 +90,7 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
             return sizeof(uint16_t);
 
         case NETOPT_DEVICE_TYPE:
+            DEBUG_PUTS("NETOPT_DEVICE_TYPE");
             if (max_len < sizeof(uint16_t)) {
                 return -EOVERFLOW;
             }
@@ -86,15 +98,19 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
             return sizeof(uint16_t);
 
         case NETOPT_IS_CHANNEL_CLR:
+            DEBUG_PUTS("NETOPT_IS_CHANNEL_CLR");
             return -ENOTSUP;
 
         case NETOPT_IS_WIRED:
+            DEBUG_PUTS("NETOPT_IS_WIRED");
             return -ENOTSUP;
 
         case NETOPT_PROMISCUOUSMODE:
+            DEBUG_PUTS("NETOPT_IS_PROMISCUOUSMODE");
             return -ENOTSUP;
 
         case NETOPT_STATE:
+            DEBUG_PUTS("NETOPT_STATE");
             if (max_len < sizeof(netopt_state_t)) {
                 return -EOVERFLOW;
             }
@@ -102,6 +118,7 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
             return sizeof(netopt_state_t);
 
         case NETOPT_TX_POWER:
+            DEBUG_PUTS("NETOPT_TX_POWER");
             if (max_len < sizeof(int16_t)) {
                 return -EOVERFLOW;
             }
@@ -116,6 +133,7 @@ static int _get(netdev_t *netdev, netopt_t opt, void *value, size_t max_len)
 
     if (((res = netdev_ieee802154_get((netdev_ieee802154_t *)netdev, opt, value,
                                       max_len)) >= 0) || (res != -ENOTSUP)) {
+        DEBUG_PUTS("fallback");
         return res;
     }
 
