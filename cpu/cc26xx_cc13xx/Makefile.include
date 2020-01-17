@@ -2,5 +2,12 @@ VARIANT = $(shell echo $(CPU_VARIANT) | tr 'a-z-' 'A-Z_')
 CFLAGS += -DCPU_VARIANT_$(VARIANT)
 
 USEMODULE += periph_common cc26xx_cc13xx_periph
+
+USEMODULE += cc26xx_cc13xx_coresdk
+USEMODULE += cc26xx_cc13xx_coresdk_nortos
+USEMODULE += cc26xx_cc13xx_coresdk_driverlib
+USEMODULE += cc26xx_cc13xx_coresdk_drivers
+USEMODULE += cc26xx_cc13xx_coresdk_drivers_rf
+
 INCLUDES += -I${RIOTCPU}/cc26xx_cc13xx/include
 INCLUDES += -I${RIOTCPU}/cc26xx_cc13xx/coresdk/vendor/coresdk_cc13xx_cc26xx/source

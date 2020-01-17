@@ -1,1 +1,0 @@
-CFLGAS = $(filter-out -Werror -Werror=old-style-definition -Werror=strict-prototypes,$(CFLAGS))

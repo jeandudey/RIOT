@@ -102,7 +102,7 @@
 #endif
 #endif
 
-#define ENABLE_DEBUG (0)
+#define ENABLE_DEBUG (1)
 #include "debug.h"
 
 void auto_init(void)
@@ -286,9 +286,10 @@ void auto_init(void)
     auto_init_cc2538_rf();
 #endif
 
-#ifdef MODULE_CC26XX_CC13XX_RF
-    extern void auto_init_cc26xx_cc13xx_rf(void);
-    auto_init_cc26xx_cc13xx_rf();
+#ifdef MODULE_CC13X2_RF
+    DEBUG("auto_init_cc13x2_rf\n");
+    extern void auto_init_cc13x2_rf(void);
+    auto_init_cc13x2_rf();
 #endif
 
 #ifdef MODULE_XBEE

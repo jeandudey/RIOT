@@ -102,7 +102,7 @@ uint64_t cc26xx_cc13xx_get_addr_long(void)
           ((uint64_t)dst[0] << 56);
 
     DEBUG("%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n",
-          dst[0]tx_power_table,
+          dst[0],
           dst[1],
           dst[2],
           dst[3],
@@ -112,10 +112,4 @@ uint64_t cc26xx_cc13xx_get_addr_long(void)
           dst[7]);
 
     return res;
-}
-
-uint16_t cc26xx_cc13xx_get_tx_power(void)
-{
-    RF_TxPowerTable_findValue(tx_power_table);
-    return 0;
 }

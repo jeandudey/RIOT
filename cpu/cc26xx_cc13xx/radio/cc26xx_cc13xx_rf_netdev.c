@@ -23,8 +23,7 @@
 
 #include "cc26xx_cc13xx_rf.h"
 #include "cc26xx_cc13xx_rf_netdev.h"
-
-#include <ti/drivers/rf/RF.h>
+#include "cc26xx_cc13xx_rf_netstack.h"
 
 #define ENABLE_DEBUG (1)
 #include "debug.h"
@@ -184,6 +183,10 @@ static int _init(netdev_t *netdev)
 
     netdev_ieee802154_set(&dev->netdev, NETOPT_ADDRESS_LONG,
                           &addr_long, sizeof(addr_long));
+
+    RF_Handle handle = cc26xx_cc13xx_netstack_open(NULL);
+
+    (void)handle;
 
     return 0;
 }

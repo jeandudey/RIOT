@@ -1,0 +1,3 @@
+ifneq (,$(filter cc13x2_rf,$(USEMODULE)))
+  USEMODULE += cc26xx_cc13xx_rf
+endif
