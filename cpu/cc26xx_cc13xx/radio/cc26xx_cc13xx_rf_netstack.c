@@ -41,6 +41,11 @@ extern rfc_CMD_PROP_RADIO_DIV_SETUP_t rf_cmd_prop_radio_div_setup;
 
 RF_Handle cc26xx_cc13xx_netstack_open(RF_Params *params)
 {
+    rf_cmd_prop_radio_div_setup.config.frontEndMode = RF_SUB_1_GHZ_FRONT_END_MODE;
+    rf_cmd_prop_radio_div_setup.config.biasMode = RF_SUB_1_GHZ_BIAS_MODE;
+    rf_cmd_prop_radio_div_setup.centerFreq = PROP_MODE_CENTER_FREQ;
+    rf_cmd_prop_radio_div_setup.loDivider = PROP_MODE_LO_DIVIDER;
+
     DEBUG("cc26xx_cc13xx_netstack_open\n");
     return RF_open(&rf_netstack, &rf_prop_mode, (RF_RadioSetup *)&rf_cmd_prop_radio_div_setup, params);
 }
