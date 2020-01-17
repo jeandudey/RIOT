@@ -27,27 +27,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*---------------------------------------------------------------------------*/
+
 #include <ti/devices/DeviceFamily.h>
 #include DeviceFamily_constructPath(driverlib/aon_rtc.h)
 #include DeviceFamily_constructPath(driverlib/systick.h)
 
 #include <ti/drivers/dpl/ClockP.h>
 #include <ti/drivers/power/PowerCC26XX.h>
-/*---------------------------------------------------------------------------*/
+
 void
 clock_arch_standby_policy(void)
 {
-  /*
-   * XXX: Workaround for an observed issue where if SysTick interrupt is not
-   * disabled when entering/leaving some low-power mode may in very rare
-   * occasions clobber the CPU and cause a crash.
-   */
-  SysTickIntDisable();
+    /*
+    * XXX: Workaround for an observed issue where if SysTick interrupt is not
+    * disabled when entering/leaving some low-power mode may in very rare
+    * occasions clobber the CPU and cause a crash.
+    */
+    SysTickIntDisable();
 
-  /* Drop to some low-power mode */
-  PowerCC26XX_standbyPolicy();
+    /* Drop to some low-power mode */
+    PowerCC26XX_standbyPolicy();
 
-  SysTickIntEnable();
+    SysTickIntEnable();
 }
-/*---------------------------------------------------------------------------*/
