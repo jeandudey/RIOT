@@ -28,8 +28,11 @@
 #define ENABLE_DEBUG (1)
 #include "debug.h"
 
+#define RF_CONF_INACTIVITY_TIMEOUT      2000
+
 /* Reference pointer for the IRQ handler */
 static netdev_t *_dev;
+static RF_Handle _handle;
 
 void _irq_handler(void)
 {
@@ -177,16 +180,23 @@ static int _init(netdev_t *netdev)
     cc26xx_cc13xx_rf_t *dev = (cc26xx_cc13xx_rf_t *) netdev;
     _dev = netdev;
 
+    RF_Params rf_params;
+    RF_Params_init(&rf_params);
+    rf_params.nInactivityTimeout = RF_CONF_INACTIVITY_TIMEOUT;
+
+    _handle = cc26xx_cc13xx_netstack_open(&rf_params);
+
+    if (_handle == NULL) {
+        DEBUG_PUTS("cc26xx_cc13xx_netstack_open failed!");
+    }
+
+
     uint64_t addr_long = cc26xx_cc13xx_get_addr_long();
 
     netdev_ieee802154_reset(&dev->netdev);
 
     netdev_ieee802154_set(&dev->netdev, NETOPT_ADDRESS_LONG,
                           &addr_long, sizeof(addr_long));
-
-    RF_Handle handle = cc26xx_cc13xx_netstack_open(NULL);
-
-    (void)handle;
 
     return 0;
 }

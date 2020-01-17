@@ -36,6 +36,7 @@
 static RF_Object rf_netstack;
 
 extern RF_Mode rf_prop_mode;
+
 extern rfc_CMD_PROP_RADIO_DIV_SETUP_t rf_cmd_prop_radio_div_setup;
 
 RF_Handle cc26xx_cc13xx_netstack_open(RF_Params *params)

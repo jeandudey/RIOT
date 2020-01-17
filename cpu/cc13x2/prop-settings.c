@@ -145,7 +145,7 @@ uint32_t rf_prop_overrides[] __attribute__((__aligned__(4))) =
 };
 
 /* Overrides for CMD_PROP_RADIO_DIV_SETUP with defualt PA */
-uint32_t rf_prop_overrides_tx_std[] __attribute__((4) = {
+uint32_t rf_prop_overrides_tx_std[] __attribute__((__aligned__(4))) = {
     // The TX Power element should always be the first in the list
     TX_STD_POWER_OVERRIDE(0xB224),
     // The ANADIV radio parameter based on the LO divider (0) and front-end
