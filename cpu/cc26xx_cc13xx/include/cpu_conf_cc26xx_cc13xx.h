@@ -25,6 +25,8 @@
 #include "cc26xx_cc13xx.h"
 
 #include "cc26xx_cc13xx_ccfg.h"
+#include "cc26xx_cc13xx_cpu.h"
+#include "cc26xx_cc13xx_cpu_scs.h"
 #include "cc26xx_cc13xx_gpio.h"
 #include "cc26xx_cc13xx_gpt.h"
 #include "cc26xx_cc13xx_i2c.h"
