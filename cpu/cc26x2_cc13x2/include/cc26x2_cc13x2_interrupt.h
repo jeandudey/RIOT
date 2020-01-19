@@ -1,27 +1,33 @@
 /*
- * Copyright (C) 2020 Jean Pierre Dudey
+ * Copyright (C) 2015 - 2017, Texas Instruments Incorporated
+ * Copyright (C) 2020 Locha Inc
  *
  * This file is subject to the terms and conditions of the GNU Lesser
  * General Public License v2.1. See the file LICENSE in the top level
  * directory for more details.
  */
 
+/**
+ * @ingroup         cpu_cc26x2_cc13x2_interrupt
+ * @{
+ *
+ * @file
+ * @brief           CC26x2/CC13x2 Interrupt interface.
+ *
+ * @author          Jean Pierre Dudey <jeandudey@hotmail.com>
+ */
+
 #ifndef CC26XX_CC13XX_INTERRUPT_H
 #define CC26XX_CC13XX_INTERRUPT_H
 
+#include "cc26xx_cc13xx_cpu.h"
 #include "cc26xx_cc13xx_nvic.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef void *hw_interrupt_t; /**< A pointer to a interrupt */
-
-/*hw_interrupt_t hw_interrupt_new(uint32_t interrupt_number,
-                                void (*callback)(void*),
-                                void* argument);*/
-
-typedef void (*interrupt_handler_t)(void);
+typedef void (*interrupt_handler_t)(void); /**< Interrupt handler */
 
 /**
  * @brief           Register an interrupt.
@@ -64,7 +70,7 @@ void interrupt_enable(uint32_t interrupt);
 void interrupt_disable(uint32_t interrupt);
 
 /**
- * @brief           Set interrupt "pending".
+ * @brief           Set interrupt to "pending".
  */
 void interrupt_set_pend(uint32_t interrupt);
 
@@ -77,6 +83,24 @@ int_fast32_t interrupt_get_pend(uint32_t interrupt);
  * @brief           "Unpend" interrupt.
  */
 void interrupt_unpend(uint32_t interrupt);
+
+/*
+ * @brief           Enable all external interrupts.
+ */
+static inline void interrupt_master_enable(void)
+{
+    __cpu_cpsie();
+}
+
+/*
+ * @brief           Disable all external interrupts.
+ *
+ * @return          Value of PRIMASK.
+ */
+static inline uintptr_t interrupt_master_disable(void)
+{
+    return __cpu_cpsid();
+}
 
 #define INT_NMI_FAULT (2) /**< NMI Fault */
 #define INT_HARD_FAULT (3) /**< Hard Fault */
@@ -130,19 +154,126 @@ void interrupt_unpend(uint32_t interrupt);
 #define INT_UART1_COMB (52) /**< UART1 combined interrupt */
 #define INT_BATMON_COMB (53) /**< Combined event from battery monitor */
 
-#define INT_PRI_LEVEL0 (0x00000000)
-#define INT_PRI_LEVEL1 (0x00000020)
-#define INT_PRI_LEVEL2 (0x00000040)
-#define INT_PRI_LEVEL3 (0x00000060)
-#define INT_PRI_LEVEL4 (0x00000080)
-#define INT_PRI_LEVEL5 (0x000000A0)
-#define INT_PRI_LEVEL6 (0x000000C0)
-#define INT_PRI_LEVEL7 (0x000000E0)
+#define INT_PRI_LEVEL0 (0x00000000) /**< Priority Level 0 **/
+#define INT_PRI_LEVEL1 (0x00000020) /**< Priority Level 1 **/
+#define INT_PRI_LEVEL2 (0x00000040) /**< Priority Level 2 **/
+#define INT_PRI_LEVEL3 (0x00000060) /**< Priority Level 3 **/
+#define INT_PRI_LEVEL4 (0x00000080) /**< Priority Level 4 **/
+#define INT_PRI_LEVEL5 (0x000000A0) /**< Priority Level 5 **/
+#define INT_PRI_LEVEL6 (0x000000C0) /**< Priority Level 6 **/
+#define INT_PRI_LEVEL7 (0x000000E0) /**< Priority Level 7 **/
 
 #define NUM_INTERRUPTS (54)
+
+typedef void *hw_interrupt_t; /**< A pointer to a interrupt */
+typedef void (*hw_interrupt_handler_t)(void*); /**< Interrupt handler */
+
+/**
+ * @brief           Create a new interrupt.
+ *
+ * @attention       1. After the use of the hw_interrupt_t is finished you MUST
+ *                  free it with hw_interrupt_free to make this interrupt
+ *                  available.
+ *                  2. You can't use hw_interrupt_new twice for the same
+ *                  interrupt, you must first free the one that is being used.
+ *
+ * @param           interrupt_number: the interrupt to register.
+ * @param           priority: the interrupt priority.
+ * @param           callback: the interrupt callback.
+ * @param           argument: the argument passed to the callback.
+ * @param           enable_on_creation: 1 to enable the interrupt, 0 otherwise.
+ *
+ * @return          A hw_interrupt_t opaque pointer type, or NULL on error.
+ */
+hw_interrupt_t hw_interrupt_new(uint32_t interrupt_number,
+                                uint8_t priority,
+                                hw_interrupt_handler_t callback,
+                                void* argument,
+                                uint8_t enable_on_creation);
+
+/**
+ * @brief           Free an hw_interrup_t.
+ */
+void hw_interrupt_free(hw_interrupt_t interrupt);;
+
+/**
+ * @brief           Enable all external interrupts.
+ */
+void hw_interrupt_enable_all(void);
+
+/**
+ * @brief           Disable all external interrupts.
+ */
+uintptr_t hw_interrupt_disable_all(void);
+
+/**
+ * @brief           Clear interrupt.
+ *
+ * @param           interrupt_number: the interrupt.
+ */
+void hw_interrupt_clear(uint32_t interrupt_num);
+
+/**
+ * @brief           Disable interrupt.
+ *
+ * @param           interrupt_number: the interrupt.
+ */
+void hw_interrupt_disable(uint32_t interrupt_number);
+
+/**
+ * @brief           Enable interrupt.
+ *
+ * @param           interrupt_number: the interrupt.
+ */
+void hw_interrupt_enable(uint32_t interrupt_number);
+
+/**
+ * @brief           Post an interrupt.
+ *
+ * @param           interrupt_number: the interrupt.
+ */
+void hw_interrupt_post(uint32_t interrupt_number);
+
+/**
+ * @brief           Set interrupt priority.
+ *
+ * @param           interrupt_number: the interrupt.
+ * @param           priority: the new interrupt priority.
+ */
+void hw_interrupt_set_priority(uint32_t interrupt_number, uint8_t priority);
+
+/**
+ * @brief           Are we in a ISR?
+ *
+ * @return          returns 1 if we are in a ISR, 0 otherwise.
+ */
+int_fast32_t hw_interrupt_in_isr(void);
+
+/**
+ * @brief           The interrupt used for software interrupts.
+ */
+#define SW_INTERRUPT_NUM (INT_PENDSV)
+
+/**
+ * @brief           Check if we're on a software interrupt.
+ *
+ * @return          returns 1 if on an interrupt, 0 otherwise.
+ */
+static inline int_fast32_t in_sw_interrupt(void)
+{
+    uint32_t interrupt_number = CC26XX_CC13XX_NVIC->INT_CTRL & 0x000000FF;
+    if (interrupt_number == SW_INTERRUPT_NUM) {
+        /* Currently in a Software Interrupt */
+        return 1;
+    }
+
+    return 0;
+}
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* CC26XX_CC13XX_INTERRUPT_H */
+
+/** @} */
