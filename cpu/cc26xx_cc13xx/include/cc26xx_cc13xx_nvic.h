@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2020 Jean Pierre Dudey
+ * Copyright (C) 2015 - 2017, Texas Instruments Incorporated
+ * Copyright (C) 2020 Locha Inc
  *
  * This file is subject to the terms and conditions of the GNU Lesser
  * General Public License v2.1. See the file LICENSE in the top level
@@ -172,54 +173,67 @@ typedef struct {
  * @brief           Usage Fault Enable.
  */
 #define NVIC_SYS_HND_CTRL_USAGE (0x00040000)
+
 /**
  * @brief           Bus Fault Enable.
  */
 #define NVIC_SYS_HND_CTRL_BUS (0x00020000)
+
 /**
  * @brief           Memory Management Fault Enable.
  */
 #define NVIC_SYS_HND_CTRL_MEM (0x00010000)
+
 /**
  * @brief           SVC Call Pending.
  */
 #define NVIC_SYS_HND_CTRL_SVC (0x00008000)
+
 /**
  * @brief           Bus Fault Pending.
  */
 #define NVIC_SYS_HND_CTRL_BUSP (0x00004000)
+
 /**
  * @brief           Memory Management Fault Pending.
  */
 #define NVIC_SYS_HND_CTRL_MEMP (0x00002000)
+
 /**
  * @brief           Usage Fault Pending.
  */
 #define NVIC_SYS_HND_CTRL_USAGEP (0x00001000)
+
 /**
  * @brief           SysTick Exception Active.
  */
 #define NVIC_SYS_HND_CTRL_TICK (0x00000800)
+
 /**
  * @brief           PendSV Exception Active.
  */
 #define NVIC_SYS_HND_CTRL_PNDSV (0x00000400)
+
 /**
  * @brief           Debug Monitor Active.
  */
 #define NVIC_SYS_HND_CTRL_MON (0x00000100)
+
 /**
  * @brief           SVC Call Active.
  */
 #define NVIC_SYS_HND_CTRL_SVCA (0x00000080)
+
 /**
  * @brief           Usage Fault Active.
  */
 #define NVIC_SYS_HND_CTRL_USGA (0x00000008)
+
 /**
  * @brief           Bus Fault Active.
  */
 #define NVIC_SYS_HND_CTRL_BUSA (0x00000002)
+
 /**
  * @brief           Memory Management Fault Actie.
  */
@@ -229,14 +243,17 @@ typedef struct {
  * @brief           Count Flag.
  */
 #define NVIC_ST_CTRL_COUNT (0x00010000)
+
 /**
  * @brief           Clock Source.
  */
 #define NVIC_ST_CTRL_CLK_SRC (0x00000004)
+
 /**
  * @brief           Interrupt Enable.
  */
 #define NVIC_ST_CTRL_INTEN (0x00000002)
+
 /**
  * @brief           Enable.
  */
