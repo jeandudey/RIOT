@@ -1,9 +1,20 @@
 /*
- * Copyright (C) 2020 Jean Pierre Dudey
+ * Copyright (C) 2015 - 2017, Texas Instruments Incorporated
+ * Copyright (C) 2020 Locha Inc
  *
  * This file is subject to the terms and conditions of the GNU Lesser
  * General Public License v2.1. See the file LICENSE in the top level
  * directory for more details.
+ */
+
+/**
+ * @ingroup         cpu_cc26x2_cc13x2_interrupt
+ * @{
+ *
+ * @file
+ * @brief           CC26x2/CC13x2 Interrupt interface.
+ *
+ * @author          Jean Pierre Dudey <jeandudey@hotmail.com>
  */
 
 #include "cpu_conf.h"
@@ -297,3 +308,5 @@ void interrupt_unpend(uint32_t interrupt)
         CC26XX_CC13XX_NVIC->UNPEND1 = 1 << (interrupt - 48);
     }
 }
+
+/** @} */
