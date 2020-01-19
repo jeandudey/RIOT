@@ -24,6 +24,7 @@
 #define __FPU_PRESENT 1U /**< Presence of FPU */
 #include "cpu_conf_cc26xx_cc13xx.h"
 
+#include "cc26x2_cc13x2_aon_rtc.h"
 #include "cc26x2_cc13x2_aux.h"
 #include "cc26x2_cc13x2_fcfg.h"
 #include "cc26x2_cc13x2_interrupt.h"
