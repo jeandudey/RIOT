@@ -28,7 +28,7 @@ extern "C" {
  * @brief           CC13x2 radio device structure
  */
 typedef struct {
-    netdev_ieee802154_t dev; /**< IEEE 802.15.4 network device */
+    netdev_ieee802154_t netdev; /**< IEEE 802.15.4 network device */
 } cc13x2_rf_t;
 
 /**
@@ -36,6 +36,20 @@ typedef struct {
  * @param           dev: the network device structure.
  */
 void cc13x2_rf_setup(cc13x2_rf_t* dev);
+
+/**
+ * @brief           Get IEEE 802.15.4 short address
+ *
+ * @return          The short address
+ */
+uint16_t cc13x2_rf_get_addr_short(void);
+
+/**
+ * @brief           Get IEEE 802.15.4 long address
+ *
+ * @return          The long address
+ */
+uint64_t cc13x2_rf_get_addr_long(void);
 
 #ifdef __cplusplus
 }
