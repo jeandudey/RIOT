@@ -19,7 +19,7 @@
 
 #include "cc13x2_rf_netdev.h"
 
-int _send(netdev_t *dev, const iolist_t *iolist)
+static int _send(netdev_t *dev, const iolist_t *iolist)
 {
     (void)dev;
     (void)iolist;
@@ -27,7 +27,7 @@ int _send(netdev_t *dev, const iolist_t *iolist)
     return -1;
 }
 
-int _recv(netdev_t *dev, void *buf, size_t len, void *info)
+static int _recv(netdev_t *dev, void *buf, size_t len, void *info)
 {
     (void)dev;
     (void)buf;
@@ -37,19 +37,19 @@ int _recv(netdev_t *dev, void *buf, size_t len, void *info)
     return -1;
 }
 
-int _init(netdev_t *dev)
+static int _init(netdev_t *dev)
 {
     (void)dev;
 
     return -1;
 }
 
-void _isr(netdev_t *dev)
+static void _isr(netdev_t *dev)
 {
     (void)dev;
 }
 
-int _get(netdev_t *dev, netopt_t opt, void *value, size_t max_len)
+static int _get(netdev_t *dev, netopt_t opt, void *value, size_t max_len)
 {
     (void)dev;
     (void)opt;
@@ -59,7 +59,7 @@ int _get(netdev_t *dev, netopt_t opt, void *value, size_t max_len)
     return -1;
 }
 
-int _set(netdev_t *dev, netopt_t opt, const void *value, size_t value_len)
+static int _set(netdev_t *dev, netopt_t opt, const void *value, size_t value_len)
 {
     (void)dev;
     (void)opt;
@@ -69,7 +69,7 @@ int _set(netdev_t *dev, netopt_t opt, const void *value, size_t value_len)
     return -1;
 }
 
-netdev_driver_t cc13x2_radio_driver = {
+const netdev_driver_t cc13x2_rf_driver = {
     .send = _send,
     .recv = _recv,
     .init = _init,

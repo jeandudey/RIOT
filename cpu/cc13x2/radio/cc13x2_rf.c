@@ -7,32 +7,19 @@
  */
 
 /**
- * @ingroup         cpu_cc13x2_radio
+ * @ingroup         cpu_cc13x2
  * @{
  *
  * @file
  * @brief           CC13x2 radio
- *
- * @author          Jean Pierre Dudey <jeandudey@hotmail.com>
- * @}
  */
 
-#include "cpu.h"
+#include "cc13x2_rf.h"
+#include "cc13x2_rf_netdev.h"
 
-#define RF_BOOT0          (0x00000000)
-
-void isr_rfc_cpe1(void)
+void cc13x2_rf_setup(cc13x2_rf_t *dev)
 {
-}
+    netdev_t *netdev = (netdev_t *)dev;
 
-void isr_rfc_cpe0(void)
-{
-}
-
-void isr_rfc_hw(void)
-{
-}
-
-void isr_rfc_cmd_ack(void)
-{
+    netdev->driver = &cc13x2_rf_driver;
 }
