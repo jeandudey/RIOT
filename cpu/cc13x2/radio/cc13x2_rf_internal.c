@@ -20,29 +20,35 @@
 #include "cpu.h"
 #include "cc13x2_rf_internal.h"
 
-#define RF_BOOT0          (0xE0000011) /**< RF Core boot parameters */
-
-void cc13x2_rf_internal_init(void)
-{
-    /* Enable RTC_UPD */
-    AON_RTC->CTL |= CTL_RTC_UPD_EN;
-
-    /* Set RF Core boot parameters */
-    PRCM->RFCBITS = RF_BOOT0;
-}
+cc13x2_rf_cmd_prop_tx_t cmd_prop_tx = {
+    .command_id = CMD_PROP_TX,
+    .status = 0,
+    .next_op = NULL,
+    .start_time = 0,
+    .start_trigger = {0},
+    .condition = {0},
+    .packet_config = {0},
+    .packet_len = 0,
+    .sync_word = 0,
+    .packet = NULL,
+};
 
 void isr_rfc_cpe1(void)
 {
+    cortexm_isr_end();
 }
 
 void isr_rfc_cpe0(void)
 {
+    cortexm_isr_end();
 }
 
 void isr_rfc_hw(void)
 {
+    cortexm_isr_end();
 }
 
 void isr_rfc_cmd_ack(void)
 {
+    cortexm_isr_end();
 }
