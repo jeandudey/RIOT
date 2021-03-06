@@ -209,6 +209,29 @@ extern const uint8_t ieee802154_addr_bcast[IEEE802154_ADDR_BCAST_LEN];
  * @{
  */
 /**
+ * @brief IEEE802.15.4 PHY features
+ * @{
+ */
+#ifndef CONFIG_HAS_IEEE802154_PHY_BPSK
+#define CONFIG_HAS_IEEE802154_PHY_BPSK              0
+#endif
+#ifndef CONFIG_HAS_IEEE802154_PHY_ASK
+#define CONFIG_HAS_IEEE802154_PHY_ASK               0
+#endif
+#ifndef CONFIG_HAS_IEEE802154_PHY_OQPSK
+#define CONFIG_HAS_IEEE802154_PHY_OQPSK             0
+#endif
+#ifndef CONFIG_HAS_IEEE802154_PHY_MR_OQPSK
+#define CONFIG_HAS_IEEE802154_PHY_MR_OQPSK          0
+#endif
+#ifndef CONFIG_HAS_IEEE802154_PHY_MR_OFDM
+#define CONFIG_HAS_IEEE802154_PHY_MR_OFDM           0
+#endif
+#ifndef CONFIG_HAS_IEEE802154_PHY_MR_FSK
+#define CONFIG_HAS_IEEE802154_PHY_MR_FSK            0
+#endif
+/** @} */
+/**
  * @brief IEEE802.15.4 default PHY mode
  * @{
  */

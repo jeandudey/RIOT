@@ -4,6 +4,37 @@
 # General Public License v2.1. See the file LICENSE in the top level
 # directory for more details.
 
+## Related features
+config HAS_IEEE802154_PHY_BPSK
+    bool
+    help
+        Indicates that a radio that supports the BPSK PHY is present.
+
+config HAS_IEEE802154_PHY_ASK
+    bool
+    help
+        Indicates that a radio that supports the ASK PHY is present.
+
+config HAS_IEEE802154_PHY_OQPSK
+    bool
+    help
+        Indicates that a radio that supports the O-QPSK PHY is present.
+
+config HAS_IEEE802154_PHY_MR_OQPSK
+    bool
+    help
+        Indicates that a radio that supports the MR-O-QPSK PHY is present.
+
+config HAS_IEEE802154_PHY_MR_OFDM
+    bool
+    help
+        Indicates that a radio that supports the MR-OFDM PHY is present.
+
+config HAS_IEEE802154_PHY_MR_FSK
+    bool
+    help
+        Indicates that a radio that supports the MR-FSK PHY is present.
+
 menuconfig KCONFIG_USEMODULE_IEEE802154
     bool "Configure IEEE802.15.4"
     depends on USEMODULE_IEEE802154
@@ -20,31 +51,37 @@ if KCONFIG_USEMODULE_IEEE802154
 
         config IEEE802154_DEFAULT_PHY_BPSK
             bool "BPSK"
+            depends on HAS_IEEE802154_PHY_BPSK
             help
                 Binary Phase Shift Keying
 
         config IEEE802154_DEFAULT_PHY_ASK
             bool "ASK"
+            depends on HAS_IEEE802154_PHY_ASK
             help
                 Amplitude-Shift Keying
 
         config IEEE802154_DEFAULT_PHY_OQPSK
             bool "O-QPSK"
+            depends on HAS_IEEE802154_PHY_OQPSK
             help
                 Offset Quadrature Phase-Shift Keying
 
         config IEEE802154_DEFAULT_PHY_MR_OQPSK
             bool "MR-O-QPSK"
+            depends on HAS_IEEE802154_PHY_MR_OQPSK
             help
                 Multi-Rate Offset Quadrature Phase-Shift Keying
 
         config IEEE802154_DEFAULT_PHY_MR_OFDM
             bool "MR-OFDM"
+            depends on HAS_IEEE802154_PHY_MR_OFDM
             help
                 Multi-Rate Orthogonal Frequency-Division Multiplexing
 
         config IEEE802154_DEFAULT_PHY_MR_FSK
             bool "MR-FSK"
+            depends on HAS_IEEE802154_PHY_MR_FSK
             help
                 Multi-Rate Frequency Shift Keying
 
