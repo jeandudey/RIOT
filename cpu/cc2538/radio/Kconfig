@@ -1,0 +1,19 @@
+# Copyright (c) 2021 Jean Pierre Dudey
+#
+# This file is subject to the terms and conditions of the GNU Lesser
+# General Public License v2.1. See the file LICENSE in the top level
+# directory for more details.
+#
+
+## Default feature used to indicate that an O-QPSK PHY is present.
+config HAS_RADIO_CC2538_RF_PHY_OQPSK
+    bool
+    default y if USEMODULE_CC2538_RF
+    select HAS_IEEE802154_PHY_OQPSK
+    help
+        Dummy feature that is selected when the 'cc2538_rf' module is included,
+        don't actually depend on this feature.
+
+        This symbol will be removed when the Kconfig migration is complete and
+        HAS_IEEE802154_PHY_OQPSK feature will be selected automatically when
+        the module is included.
