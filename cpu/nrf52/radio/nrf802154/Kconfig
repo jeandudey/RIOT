@@ -26,3 +26,16 @@ config HAS_RADIO_NRF802154
     bool
     help
         Indicates that a IEEE 802.15.4 NRF52 radio is present.
+
+## Default feature used to indicate that an O-QPSK PHY is present.
+config HAS_RADIO_NRF802154_PHY_OQPSK
+    bool
+    default y if USEMODULE_NRF802154
+    select HAS_IEEE802154_PHY_OQPSK
+    help
+        Dummy feature that is selected when the 'nrf802154' module is included,
+        don't actually depend on this feature.
+
+        This symbol will be removed when the Kconfig migration is complete and
+        HAS_IEEE802154_PHY_OQPSK feature will be selected automatically when
+        the module is included.
