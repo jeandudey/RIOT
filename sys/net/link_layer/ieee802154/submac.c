@@ -371,13 +371,7 @@ int ieee802154_submac_init(ieee802154_submac_t *submac, const network_uint16_t *
                                         &submac->ext_addr, &submac->panid);
 
     /* Configure PHY settings (mode, channel, TX power) */
-    ieee802154_phy_conf_t conf =
-    { .phy_mode = submac->phy_mode,
-      .channel = CONFIG_IEEE802154_DEFAULT_CHANNEL,
-      .page = CONFIG_IEEE802154_DEFAULT_CHANNEL,
-      .pow = CONFIG_IEEE802154_DEFAULT_TXPOWER };
-
-    ieee802154_radio_config_phy(dev, &conf);
+    ieee802154_radio_config_phy(dev, &submac->phy_conf);
     assert(ieee802154_radio_set_cca_threshold(dev,
                                               CONFIG_IEEE802154_CCA_THRESH_DEFAULT) >= 0);
 
