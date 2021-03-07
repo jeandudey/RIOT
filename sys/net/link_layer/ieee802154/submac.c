@@ -324,17 +324,17 @@ int ieee802154_submac_init(ieee802154_submac_t *submac, const network_uint16_t *
     submac->csma_retries = CONFIG_IEEE802154_DEFAULT_CSMA_CA_RETRIES;
     submac->be.max = CONFIG_IEEE802154_DEFAULT_CSMA_CA_MAX_BE;
 
-    submac->tx_pow = CONFIG_IEEE802154_DEFAULT_TXPOWER;
+    submac->phy_conf.pow = CONFIG_IEEE802154_DEFAULT_TXPOWER;
 
     if (ieee802154_radio_has_24_ghz(dev)) {
-        submac->channel_num = CONFIG_IEEE802154_DEFAULT_CHANNEL;
+        submac->phy_conf.channel = CONFIG_IEEE802154_DEFAULT_CHANNEL;
 
         /* 2.4 GHz only use page 0 */
-        submac->channel_page = 0;
+        submac->phy_conf.page = 0;
     }
     else {
-        submac->channel_num = CONFIG_IEEE802154_DEFAULT_SUBGHZ_CHANNEL;
-        submac->channel_page = CONFIG_IEEE802154_DEFAULT_SUBGHZ_PAGE;
+        submac->phy_conf.channel = CONFIG_IEEE802154_DEFAULT_SUBGHZ_CHANNEL;
+        submac->phy_conf.page = CONFIG_IEEE802154_DEFAULT_SUBGHZ_PAGE;
     }
 
     /* Get supported PHY modes */
@@ -386,16 +386,10 @@ int ieee802154_submac_init(ieee802154_submac_t *submac, const network_uint16_t *
     return 0;
 }
 
-int ieee802154_set_phy_conf(ieee802154_submac_t *submac, uint16_t channel_num,
-                            uint8_t channel_page, int8_t tx_pow)
+int ieee802154_set_phy_conf(ieee802154_submac_t *submac,
+                            const ieee802154_phy_conf_t *phy_conf)
 {
     ieee802154_dev_t *dev = submac->dev;
-    const ieee802154_phy_conf_t conf =
-    { .phy_mode = submac->phy_mode,
-      .channel = channel_num,
-      .page = channel_page,
-      .pow = tx_pow };
-
     if (submac->state == IEEE802154_STATE_OFF) {
         return -ENETDOWN;
     }
@@ -405,12 +399,10 @@ int ieee802154_set_phy_conf(ieee802154_submac_t *submac, uint16_t channel_num,
         return res;
     }
 
-    res = ieee802154_radio_config_phy(dev, &conf);
+    res = ieee802154_radio_config_phy(dev, phy_conf);
 
     if (res >= 0) {
-        submac->channel_num = channel_num;
-        submac->channel_page = channel_page;
-        submac->tx_pow = tx_pow;
+        submac->phy_conf = *phy_conf;
     }
     while (ieee802154_radio_confirm_set_trx_state(dev) == -EAGAIN) {}
 

@@ -112,13 +112,11 @@ struct ieee802154_submac {
     bool wait_for_ack;                  /**< SubMAC is waiting for an ACK frame */
     bool tx;                            /**< SubMAC is currently transmitting a frame */
     uint16_t panid;                     /**< IEEE 802.15.4 PAN ID */
-    uint16_t channel_num;               /**< IEEE 802.15.4 channel number */
-    uint8_t channel_page;               /**< IEEE 802.15.4 channel page */
+    ieee802154_phy_conf_t phy_conf;     /**< IEEE 802.15.4 PHY configuration */
     uint8_t retrans;                    /**< current number of retransmissions */
     uint8_t csma_retries_nb;            /**< current number of CSMA-CA retries */
     uint8_t backoff_mask;               /**< internal value used for random backoff calculation */
     uint8_t csma_retries;               /**< maximum number of CSMA-CA retries */
-    int8_t tx_pow;                      /**< Transmission power (in dBm) */
     ieee802154_submac_state_t state;    /**< State of the SubMAC */
     ieee802154_phy_mode_t phy_mode;     /**< IEEE 802.15.4 PHY mode */
 };
@@ -236,23 +234,21 @@ static inline int ieee802154_set_panid(ieee802154_submac_t *submac,
 static inline ieee802154_phy_mode_t ieee802154_get_phy_mode(
     ieee802154_submac_t *submac)
 {
-    return submac->phy_mode;
+    return submac->phy_conf.phy_mode;
 }
 
 /**
  * @brief Set IEEE 802.15.4 PHY configuration (channel, TX power)
  *
  * @param[in] submac pointer to the SubMAC descriptor
- * @param[in] channel_num channel number
- * @param[in] channel_page channel page
- * @param[in] tx_pow transmission power (in dBm)
+ * @param[in] phy_conf pointer to PHY configuration structure
  *
  * @return 0 on success
  * @return -ENOTSUP if the PHY settings are not supported
  * @return negative errno on error
  */
-int ieee802154_set_phy_conf(ieee802154_submac_t *submac, uint16_t channel_num,
-                            uint8_t channel_page, int8_t tx_pow);
+int ieee802154_set_phy_conf(ieee802154_submac_t *submac,
+                            const ieee802154_phy_conf_t *phy_conf);
 
 /**
  * @brief Set IEEE 802.15.4 channel number
@@ -269,8 +265,9 @@ int ieee802154_set_phy_conf(ieee802154_submac_t *submac, uint16_t channel_num,
 static inline int ieee802154_set_channel_number(ieee802154_submac_t *submac,
                                                 uint16_t channel_num)
 {
-    return ieee802154_set_phy_conf(submac, channel_num, submac->channel_page,
-                                   submac->tx_pow);
+    ieee802154_phy_conf_t conf = submac->phy_conf;
+    conf.channel = channel_num;
+    return ieee802154_set_phy_conf(submac, &conf);
 }
 
 /**
@@ -288,8 +285,9 @@ static inline int ieee802154_set_channel_number(ieee802154_submac_t *submac,
 static inline int ieee802154_set_channel_page(ieee802154_submac_t *submac,
                                               uint16_t channel_page)
 {
-    return ieee802154_set_phy_conf(submac, submac->channel_num, channel_page,
-                                   submac->tx_pow);
+    ieee802154_phy_conf_t conf = submac->phy_conf;
+    conf.page = channel_page;
+    return ieee802154_set_phy_conf(submac, &conf);
 }
 
 /**
@@ -307,8 +305,9 @@ static inline int ieee802154_set_channel_page(ieee802154_submac_t *submac,
 static inline int ieee802154_set_tx_power(ieee802154_submac_t *submac,
                                           int8_t tx_pow)
 {
-    return ieee802154_set_phy_conf(submac, submac->channel_num,
-                                   submac->channel_page, tx_pow);
+    ieee802154_phy_conf_t conf = submac->phy_conf;
+    conf.pow = tx_pow;
+    return ieee802154_set_phy_conf(submac, &conf);
 }
 
 /**
