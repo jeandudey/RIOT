@@ -118,7 +118,6 @@ struct ieee802154_submac {
     uint8_t backoff_mask;               /**< internal value used for random backoff calculation */
     uint8_t csma_retries;               /**< maximum number of CSMA-CA retries */
     ieee802154_submac_state_t state;    /**< State of the SubMAC */
-    ieee802154_phy_mode_t phy_mode;     /**< IEEE 802.15.4 PHY mode */
 };
 
 /**
