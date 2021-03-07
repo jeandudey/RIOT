@@ -347,7 +347,7 @@ int ieee802154_submac_init(ieee802154_submac_t *submac, const network_uint16_t *
     if (CONFIG_IEEE802154_DEFAULT_PHY_MODE != IEEE802154_PHY_DISABLED &&
         (supported_phy_modes & default_phy_cap)) {
         /* Check if default PHY is supported */
-        submac->phy_mode = CONFIG_IEEE802154_DEFAULT_PHY_MODE;
+        submac->phy_conf.phy_mode = CONFIG_IEEE802154_DEFAULT_PHY_MODE;
     }
     else {
         /* Get first set bit, and use it as the default,
@@ -357,7 +357,7 @@ int ieee802154_submac_init(ieee802154_submac_t *submac, const network_uint16_t *
          * IEEE 802.15.4g-2012 PHY modes. */
         unsigned bit = bitarithm_lsb(supported_phy_modes);
 
-        submac->phy_mode = ieee802154_cap_to_phy_mode(1 << bit);
+        submac->phy_conf.phy_mode = ieee802154_cap_to_phy_mode(1 << bit);
     }
 
     /* If the radio is still not in TRX_OFF state, spin */
