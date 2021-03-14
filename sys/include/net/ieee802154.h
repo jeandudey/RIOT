@@ -185,6 +185,49 @@ enum {
 };
 
 /**
+ * @brief SUN PHY frequency band identifiers
+ *
+ * IEEE Std 802.15.4g-2012
+ * Table 68f-SUN PHY frequency band definitions
+ *
+ * IEEE Std 802.15.4-2015
+ * Table 7-19-Frequency band identifier values
+ *
+ * IEEE Std 802.15.4-2020
+ * Table 7-21—Frequency band identifier values
+ * Table 7-22 Frequency band identifier values—extended
+ */
+typedef enum {
+    IEEE802154_SUN_PHY_BAND_169_MHZ     =   (0)     /**< 169.400-169.475 (Europe) */
+    IEEE802154_SUN_PHY_BAND_450_MHZ     =   (1)     /**< 450-470 (US FCC Part 22/90) */
+    IEEE802154_SUN_PHY_BAND_470_MHZ     =   (2)     /**< 470-510 (China) */
+    IEEE802154_SUN_PHY_BAND_780_MHZ     =   (3)     /**< 779-787 (China) */
+    IEEE802154_SUN_PHY_BAND_863_MHZ     =   (4)     /**< 863-870 (Europe) */
+    IEEE802154_SUN_PHY_BAND_896_MHZ     =   (5)     /**< 896-870 (US FCC Part 90) */
+    IEEE802154_SUN_PHY_BAND_901_MHZ     =   (6)     /**< 901-902 (US FCC Part 24) */
+    IEEE802154_SUN_PHY_BAND_915_MHZ     =   (7)     /**< 902-928 (US) */
+    IEEE802154_SUN_PHY_BAND_917_MHZ     =   (8)     /**< 917-923.5 (Korea) */
+    IEEE802154_SUN_PHY_BAND_920_MHZ     =   (9)     /**< 920-928 (Japan) */
+    IEEE802154_SUN_PHY_BAND_928_MHZ     =   (10)    /**< 928-960 (US, non-contiguous) */
+    IEEE802154_SUN_PHY_BAND_950_MHZ     =   (11)    /**< 950-958 (Japan) */
+    IEEE802154_SUN_PHY_BAND_1427_MHZ    =   (12)    /**< 1427-1518 (US and Canada, non-contiguous) */
+    IEEE802154_SUN_PHY_BAND_2450_MHZ    =   (13),   /**< 2400-2483.5 */
+    /* also specified by IEEE Std 802.15.4-2020 */
+    IEEE802154_SUN_PHY_BAND_866_MHZ     =   (14),   /**< 866 MHz */
+    IEEE802154_SUN_PHY_BAND_870_MHZ     =   (15),   /**< 870 MHz */
+    /* extended table */
+    IEEE802154_SUN_PHY_BAND_915A_MHZ    =   (16),   /**< 915 MHz-a */
+    IEEE802154_SUN_PHY_BAND_915B_MHZ    =   (17),   /**< 915 MHz-b */
+    IEEE802154_SUN_PHY_BAND_915C_MHZ    =   (18),   /**< 915 MHz-c */
+    IEEE802154_SUN_PHY_BAND_915D_MHZ    =   (19),   /**< 915 MHz-d */
+    IEEE802154_SUN_PHY_BAND_915E_MHZ    =   (20),   /**< 915 MHz-e */
+    IEEE802154_SUN_PHY_BAND_919_MHZ     =   (21),   /**< 919 MHz */
+    IEEE802154_SUN_PHY_BAND_920A_MHZ    =   (22),   /**< 920 MHz-a */
+    IEEE802154_SUN_PHY_BAND_920B_MHZ    =   (23),   /**< 920 MHz-b */
+    IEEE802154_SUN_PHY_BAND_867_MHZ     =   (24),   /**< 867 MHz */
+} ieee802154_sun_phy_band_t;
+
+/**
  * @brief   Special address definitions
  * @{
  */
