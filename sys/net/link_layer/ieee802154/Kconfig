@@ -35,6 +35,17 @@ config HAS_IEEE802154_PHY_MR_FSK
     help
         Indicates that a radio that supports the MR-FSK PHY is present.
 
+config HAS_IEEE802154_PHY_SUN
+    bool
+    default y if HAS_IEEE802154_PHY_MR_OQPSK || HAS_IEEE802154_PHY_MR_OFDM || HAS_IEEE802154_PHY_MR_FSK
+    help
+        Indicates that at least one of the SUN PHYs is available.
+
+        SUN PHYs are:
+            - MR-O-QPSK
+            - MR-OFDM
+            - MR-FSK
+
 menuconfig KCONFIG_USEMODULE_IEEE802154
     bool "Configure IEEE802.15.4"
     depends on USEMODULE_IEEE802154
