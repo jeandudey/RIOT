@@ -415,6 +415,14 @@ typedef struct {
 } ieee802154_phy_mr_oqpsk_conf_t;
 
 /**
+ * @brief Holder of the PHY configuration for the MR-OFDM PHY.
+ */
+typedef struct {
+    uint8_t option;                 /**< Option (Values: 1-4) */
+    uint8_t mcs;                    /**< Modulation and Coding Scheme (Values: 0-6) */
+} ieee802154_phy_mr_ofdm_conf_t;
+
+/**
  * @brief Holder of the PHY configuration
  */
 typedef struct {
