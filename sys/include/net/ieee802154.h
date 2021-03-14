@@ -123,6 +123,7 @@ extern "C" {
 
 #define IEEE802154_PHY_MR_FSK_PHR_LEN      (2)  /**< MR-FSK PHY header length */
 #define IEEE802154_PHY_MR_FSK_2FSK_SFD_LEN (2)  /**< MR-FSK SFD length on Filtered 2-FSK */
+#define IEEE802154_PHY_MR_FSK_4FSK_SFD_LEN (4)  /**< MR-FSK SFD length on Filtered 4-FSK */
 
 /**
  * For the MR-FSK PHY, the SFD value when PHR + PSDU are coded/uncoded and with
