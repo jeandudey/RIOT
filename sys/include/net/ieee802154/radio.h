@@ -407,6 +407,14 @@ typedef enum {
 } ieee802154_rx_mode_t;
 
 /**
+ * @brief Holder of the PHY configuration for the MR-OQPSK PHY.
+ */
+typedef struct {
+    uint8_t chips;                  /**< Chip Rate (kchip/s) */
+    uint8_t rate;                   /**< Rate Mode */
+} ieee802154_phy_mr_oqpsk_conf_t;
+
+/**
  * @brief Holder of the PHY configuration
  */
 typedef struct {
