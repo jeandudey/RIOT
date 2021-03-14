@@ -423,6 +423,17 @@ typedef struct {
 } ieee802154_phy_mr_ofdm_conf_t;
 
 /**
+ * @brief Holder of the PHY configuration for the MR-FSK PHY.
+ */
+typedef struct {
+    uint8_t symbol_rate;            /**< Symbol Rate (Hz) */
+    uint8_t modulation_order;       /**< Modulation Order */
+    uint8_t modulation_index;       /**< Modulation Index (x 64) */
+    uint32_t channel_spacing;       /**< Channel Spacing (Hz) */
+    uint8_t fec;                    /**< Forward Error Correction */
+} ieee802154_phy_mr_fsk_conf_t;
+
+/**
  * @brief Holder of the PHY configuration
  */
 typedef struct {
