@@ -448,4 +448,66 @@ int ieee802154_set_state(ieee802154_submac_t *submac, ieee802154_submac_state_t 
     return res;
 }
 
+uint32_t ieee802154_submac_symbol_duration(ieee802154_submac_t *submac)
+{
+#if IS_ACTIVE(CONFIG_HAS_IEEE802154_PHY_MR_OQPSK)
+    bool is_mr_oqpsk = submac->phy_conf.phy_mode == IEEE802154_PHY_MR_OQPSK;
+    if (is_mr_oqpsk) {
+        switch (submac->phy_conf.sun.band) {
+            case IEEE802154_SUN_PHY_BAND_450_MHZ:
+            case IEEE802154_SUN_PHY_BAND_863_MHZ:
+            case IEEE802154_SUN_PHY_BAND_920_MHZ:
+            case IEEE802154_SUN_PHY_BAND_950_MHZ:
+                return 320 * NS_PER_US;
+            case IEEE802154_SUN_PHY_BAND_780_MHZ:
+            case IEEE802154_SUN_PHY_BAND_915_MHZ:
+            case IEEE802154_SUN_PHY_BAND_917_MHZ:
+            case IEEE802154_SUN_PHY_BAND_2450_MHZ:
+                return 64 * NS_PER_US;
+            default:
+                assert(0);
+                break;
+        }
+    }
+#endif
+
+#if IS_ACTIVE(CONFIG_HAS_IEEE802154_PHY_MR_FSK) || \
+    IS_ACTIVE(CONFIG_HAS_IEEE802154_PHY_MR_OFDM)
+    bool is_mr_fsk = submac->phy_conf.phy_mode == IEEE802154_PHY_MR_FSK;
+    bool is_mr_ofdm = submac->phy_conf.phy_mode == IEEE802154_PHY_MR_OFDM;
+    if (is_mr_fsk || is_mr_ofdm) {
+        switch (submac->phy_conf.sun.band) {
+            case IEEE802154_SUN_PHY_BAND_169_MHZ:
+                /* 208 us + 1/3 us */
+                return (208 * NS_PER_US) + ((1 * NS_PER_US) / 3);
+            case IEEE802154_SUN_PHY_BAND_450_MHZ:
+                /* 104 us + 1/6 us */
+                return (104 * NS_PER_US) * ((1 * NS_PER_US) / 6);
+            case IEEE802154_SUN_PHY_BAND_470_MHZ:
+            case IEEE802154_SUN_PHY_BAND_780_MHZ:
+            case IEEE802154_SUN_PHY_BAND_863_MHZ:
+            case IEEE802154_SUN_PHY_BAND_915_MHZ:
+            case IEEE802154_SUN_PHY_BAND_917_MHZ:
+            case IEEE802154_SUN_PHY_BAND_920_MHZ:
+            case IEEE802154_SUN_PHY_BAND_950_MHZ:
+            case IEEE802154_SUN_PHY_BAND_2450_MHZ:
+                return 20 * NS_PER_US;
+            case IEEE802154_SUN_PHY_BAND_896_MHZ:
+            case IEEE802154_SUN_PHY_BAND_901_MHZ:
+            case IEEE802154_SUN_PHY_BAND_928_MHZ:
+            case IEEE802154_SUN_PHY_BAND_1427_MHZ:
+                return  100 * NS_PER_US;
+            default:
+                assert(0);
+                break;
+        }
+    }
+#endif
+
+    /* XXX: 16 us for any other PHY, it would be nice to have
+     * what is the symbol duration of the legacy ASK, BPSK, and OQPSK
+     * PHYs */
+    return 16;
+}
+
 /** @} */

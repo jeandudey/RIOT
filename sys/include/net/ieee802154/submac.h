@@ -405,6 +405,13 @@ void ieee802154_submac_crc_error_cb(ieee802154_submac_t *submac);
  */
 void ieee802154_submac_tx_done_cb(ieee802154_submac_t *submac);
 
+/**
+ * @brief Calculate the symbol duration in ns for the current PHY configuration.
+ *
+ * @param[in] submac pointer to the SubMAC descriptor
+ */
+uint32_t ieee802154_submac_symbol_duration(ieee802154_submac_t *submac);
+
 #ifdef __cplusplus
 }
 #endif
