@@ -510,4 +510,42 @@ uint32_t ieee802154_submac_symbol_duration(ieee802154_submac_t *submac)
     return 16;
 }
 
+
+uint8_t ieee802154_submac_cca_time(ieee802154_submac_t *submac)
+{
+    /* MR-O-OQPSK is the only exception to aCCATime */
+#if IS_ACTIVE(CONFIG_HAS_IEEE802154_PHY_MR_OQPSK)
+    bool is_mr_oqpsk = submac->phy_conf.phy_mode == IEEE802154_PHY_MR_QQPSK;
+    uint8_t chips = submac->phy_conf.sun.mr_oqpsk.chips;
+    if (is_mr_oqpsk) {
+        switch (submac->phy_conf.sun.band) {
+            case IEEE802154_SUN_PHY_BAND_470_MHZ:
+            case IEEE802154_SUN_PHY_BAND_863_MHZ:
+                if (chips == 100) {
+                    return 4;
+                }
+                break;
+            case IEEE802154_SUN_PHY_BAND_780_MHZ:
+                if (chips == 100) {
+                    return 4;
+                }
+                else if (chips == 1000) {
+                    return 8;
+                }
+                break;
+            case IEEE802154_SUN_PHY_BAND_915_MHZ:
+            case IEEE802154_SUN_PHY_BAND_917_MHZ:
+            case IEEE802154_SUN_PHY_BAND_2450_MHZ:
+                return 8;
+            default:
+                assert(0);
+                break;
+        }
+    }
+#endif
+
+    /* for all other PHYs */
+    return 8;
+}
+
 /** @} */

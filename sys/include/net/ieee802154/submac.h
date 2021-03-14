@@ -412,6 +412,8 @@ void ieee802154_submac_tx_done_cb(ieee802154_submac_t *submac);
  */
 uint32_t ieee802154_submac_symbol_duration(ieee802154_submac_t *submac);
 
+int8_t ieee802154_submac_cca_time(ieee802154_submac_t *submac);
+
 #ifdef __cplusplus
 }
 #endif
