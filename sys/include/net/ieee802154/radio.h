@@ -441,6 +441,24 @@ typedef struct {
     uint16_t channel;               /**< IEEE802.15.4 channel number */
     uint8_t page;                   /**< IEEE802.15.4 channel page */
     int8_t pow;                     /**< TX power in dBm */
+    union {
+#if IS_ACTIVE(CONFIG_HAS_IEEE802154_PHY_SUN)
+        struct {
+            ieee802154_sun_phy_band_t band; /**< SUN PHY band */
+            /**
+             * @brief SUN PHY configuration
+             *
+             * The allowed field to read/write in this union is indicated by
+             * @ref ieee802154_phy_conf_t::phy_mode.
+             */
+            union {
+                ieee802154_phy_mr_oqpsk_conf_t mr_oqpsk;
+                ieee802154_phy_mr_ofdm_conf_t mr_ofdm;
+                ieee802154_phy_mr_fsk_conf_t mr_fsk;
+            };
+        } sun;
+#endif /* IS_ACTIVE(CONFIG_HAS_IEEE802154_PHY_SUN) */
+    };
 } ieee802154_phy_conf_t;
 
 /**
