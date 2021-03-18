@@ -414,7 +414,18 @@ void ieee802154_submac_tx_done_cb(ieee802154_submac_t *submac);
  */
 uint32_t ieee802154_submac_symbol_duration(ieee802154_submac_t *submac);
 
-int8_t ieee802154_submac_cca_time(ieee802154_submac_t *submac);
+/**
+ * @brief Calculate the time required to perform CCA detection for the current
+ * PHY configuration.
+ *
+ * @param[in] submac pointer to the SubMAC descriptor
+ *
+ * @return Time required expressed in symbols.
+ */
+uint8_t ieee802154_submac_cca_time(ieee802154_submac_t *submac);
+
+void ieee802154_submac_unit_backoff_period(ieee802154_submac_t *submac);
+
 
 #ifdef __cplusplus
 }

@@ -544,7 +544,7 @@ uint8_t ieee802154_submac_cca_time(ieee802154_submac_t *submac)
     }
 #endif
 
-    /* for all other PHYs */
+    /* for SUN PHYs and all other PHYs */
     return 8;
 }
 
